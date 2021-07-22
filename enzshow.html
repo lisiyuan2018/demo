@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .c1 {
+            float: left;
+            width: 40%;
+            height: 360px;
+            border: 1px solid red;
+        }
+        .c2 {
+            float: left;
+            width: 50%;
+            height: 500px;
+            border: 1px solid red;
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <form action="/restriction/enzshow/" method="POST">
+        {% csrf_token %}
+        <p>{{ obj.vector.label }}{{obj.vector}}{{ obj.errors.vector.0 }}</p>
+        <p>{{ obj2.insert_seq1.label }}{{obj2.insert_seq1}}{{ obj2.errors.insert_seq1.0 }}</p>
+        <p>{{ obj2.insert_seq2.label }}{{obj2.insert_seq2}}{{ obj2.errors.insert_seq2.0 }}</p>
+        <p>{{ obj2.insert_seq3.label }}{{obj2.insert_seq3}}{{ obj2.errors.insert_seq3.0 }}</p>
+
+        <input type="submit" name="提交" value="提交"/>
+    </form>
+    {% if type2_show %}
+        <div class="c1">
+            <form action="/restriction/type2/" method="POST">
+                {% csrf_token %}
+                <ul>
+                    <h3>匹配到的type2酶</h3>
+                    {% for enz, site in type2_show.items %}
+                        {% if site %}
+                            <li><label>
+                                <input type="checkbox" value='{{ enz }}' name="check_list" />
+                            </label>{{ enz }}:{{ site }}</li>
+                        {% endif %}
+                    {% endfor %}
+
+                    <input type="submit" name="提交" value="提交"/>
+                </ul>
+            </form>
+        </div>
+    {% endif %}
+    {% if type2s_show %}
+        <div class="c2">
+            <form action="/restriction/type2s/" method="POST">
+                {% csrf_token %}
+                <ul>
+                    <h3>匹配到的type2s酶</h3>
+                    {% for enz, site in type2s_show.items %}
+                        {% if site %}
+                            <li><label>
+                                <input type="checkbox" value='{{ enz }}' name="check_list" />
+                            </label>{{ enz }}:{{ site }}</li>
+                        {% endif %}
+                    {% endfor %}
+                    <input type="submit" name="提交" value="提交"/>
+                </ul>
+            </form>
+        </div>
+
+    {% endif %}
+
+{#    <p>{{ obj.insert_seq1.label }}{{obj.insert_seq1}}</p>#}
+{#    <p>{{ obj.insert_seq2.label }}{{obj.insert_seq2}}</p>#}
+{#    <p>{{ obj.insert_seq3.label }}{{obj.insert_seq3}}</p>#}
+
+{#    {% for pri in primers %}#}
+{#        <li>{{ pri }}</li>#}
+{#    {% endfor %}#}
+
+
+
+
+</body>
+</html>
